@@ -7,7 +7,7 @@ PHP Library to access the undocumented https://fantasy.premierleague.com API
 
 ### Using composer
 
-    composer require mormanski/fpl-lib
+    composer require livecore-interactive/fpl-api
 
 ### Using github repository
 
@@ -15,19 +15,19 @@ PHP Library to access the undocumented https://fantasy.premierleague.com API
         "repositories": [
             {
                 "type": "vcs",
-                "url": "https://github.com/mormanski/fpl-lib"
+                "url": "https://github.com/livecore-interactive/fpl-api"
             }
         ],
         "require": {
-            "mormasnki/fpl-lib": "master"
+            "livecore-interactive/fpl-api": "master"
         }
     }
 
 ## Using the library
 
-    use Mormanski\FplLib\FplLib;
+    use LivecoreInteractive\FplApi\FplApi;
 
-    $fpl = new FplLib();
+    $fpl = new FplApi();
     $client = $fpl->getClient();
 
 ## API Endpoints

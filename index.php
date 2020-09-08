@@ -1,12 +1,12 @@
 <?php
 include_once "vendor/autoload.php";
-include_once "src/FplLib.php";
+include_once "src/FplApi.php";
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Cookie\CookieJar;
-use Livecore\FplLib\FplLib;
+use LivecoreInteractive\FplLib\FplLib;
 
 
 // $domain = 'premierleague.com';

@@ -1,5 +1,5 @@
 {
-  "name": "LivecoreSystems/fplApi",
+  "name": "livecore-interactive/fpl-api",
   "type": "library",
   "description": "PHP Library to access the undocumented https://fantasy.premierleague.com API ",
   "version":"1.0",
@@ -11,14 +11,14 @@
     "epl",
     "fantasy football"
   ],
-  "homepage": "https://github.com/LivecoreSystems/fplApi",
+  "homepage": "https://github.com/livecore-interactive/fpl-api",
   "license": "GPL-3.0",
   "prefer-stable": true,
   "minimum-stability": "dev",
   "authors": [
     {
       "name": "Livecore Systems",
-      "homepage": "https://github.com/LivecoreSystems"
+      "homepage": "https://github.com/livecore-interactive"
     }
   ],
   "require": {
@@ -27,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "LivecoreSystems\\FplApi\\": "src/"
+      "livecoreInteractive\\FplApi\\": "src/"
     }
   }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace LivecoreSystems\FplApi;
+namespace LivecoreInteractive\FplApi;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Cookie\CookieJar;
 
-class FplLib
+class FplApi
 {
 
     CONST BASE_URL = 'https://fantasy.premierleague.com/';
