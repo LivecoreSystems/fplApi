@@ -6,6 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 
 class FplApi
 {
@@ -19,18 +21,21 @@ class FplApi
 
     public function __construct()
     {   
-        $domain = 'premierleague.com';
-        $values = ['pl_profile' => 'eyJzIjogIld6SXNNalF6TmpBd05qUmQ6MWh5UlBKOlNhWGlObUVFRjNia21DQzR0V21HbENSVVc4OCIsICJ1IjogeyJpZCI6IDI0MzYwMDY0LCAiZm4iOiAiR2ljaGltdSIsICJsbiI6ICJNdWhvcm8iLCAiZmMiOiA4fX0=',"csrftoken"=>"xr2R41ykxKJ0iVyKhxg20z06aOSBzwCbt4UQw6TBR6feXxWURqsIu50ig71ENNlN","sessionid"=>"dz63j1x7nwkjvx6li4yu8es9eutl3l1y"];
-
-        $this->cookieJar = CookieJar::fromArray($values, $domain);
-        
-        $this->cookieJar= new CookieJar;
-        $this->client = new Client([
-            'headers' => ['User-Agent' => 'FplLib/1.0','Content-Type'=>'application/x-www-form-urlencoded'],
-            'cookies' => $this->cookieJar
-        ]);
-        $this->authClient = new GuzzleClient($this->client, self::getAuthOperations());
-        $this->client = new GuzzleClient($this->client, self::getGeneralOperations());
+        try{
+			$this->cookieJar= new CookieJar;
+			$this->client = new Client([
+				'headers' => ['User-Agent' => 'FplApi/1.0','Content-Type'=>'application/x-www-form-urlencoded'],
+				'cookies' => $this->cookieJar,
+				'http_errors' => false,
+			]);
+			$this->authClient = new GuzzleClient($this->client, self::getAuthOperations());
+			$this->client = new GuzzleClient($this->client, self::getGeneralOperations());
+		}catch (RequestException $e) {
+			echo Psr7\str($e->getRequest());
+			if ($e->hasResponse()) {
+				echo Psr7\str($e->getResponse());
+			}
+		}
     }
 
     public static function getGeneralOperations()
@@ -38,6 +43,7 @@ class FplApi
         $description = new Description(
             [
                 'baseUri' => self::BASE_URL,
+				'cookies' => true,
                 'operations' => [
                     'bootstrapStatic' => [
                         'httpMethod' => 'GET',
@@ -144,11 +150,12 @@ class FplApi
         $description = new Description(
             [
                 'baseUri' => self::AUTH_URL,
+				'cookies' => true,
                 'operations' => [
                     'login' => [
                         'httpMethod' => 'POST',
                         'uri' => 'login/',
-                        'responseModel' => 'getResponse',
+                        'responseModel' => 'getRawResponse',
                         'parameters'=>[
                             'password'=>[
                                 'type' => 'string',
@@ -184,6 +191,15 @@ class FplApi
                     'getResponse' => [
                         'type' => 'object',
                         'additionalProperties' => ['location' => 'json'],
+                    ],
+                    "getRawResponse"=> [
+                      "type"=> "object",
+                      "properties"=> [
+                        "body"=> [
+                          "location"=> "body",
+                          "type"=> "string"
+                        ]
+                      ]
                     ]
                 ],
             ]

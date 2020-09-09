@@ -29,6 +29,16 @@ PHP Library to access the undocumented https://fantasy.premierleague.com API
 
     $fpl = new FplApi();
     $client = $fpl->getClient();
+	$auth = $fpl->getAuthClient();
+	
+	
+	////////////////////log in api
+	$auth->login([
+		'password'=>'password',
+		'login'=>'your-email',
+		'redirect_uri'=>'https://fantasy.premierleague.com/',
+		'app'=>'plfpl-web'
+	]);
 
 ## API Endpoints
 
